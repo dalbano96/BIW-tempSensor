@@ -13,7 +13,7 @@ import datetime
 class DemoCore():
 
     def index(self,request):
-        ser = serial.Serial('/dev/ttyACM0', 9600) # This is the Serial Port we gather information from. You could replace this with the inbuild port if you wish
+        ser = serial.Serial('/dev/tyACM0', 9600) # This is the Serial Port we gather information from. You could replace this with the inbuild port if you wish
 
         data = self.receiving(ser)             
         
@@ -44,7 +44,7 @@ class DemoCore():
         today = datetime.datetime.today()
         aDate = datetime.datetime.strftime(today,"%Y-%m-%d %H:%M:%S")
 
-        f = open(CURRENTDIR +"/demo.html")
+        f = open(CURRENTDIR +"/index.html")
         html = f.read()
         html = html.replace("%TodaysDate%",aDate) # If %TodaysDate% Is in the html file it will be replace by the current time
         html = html.replace("%ArduinoOutput%",str(data)) #If %ArduinoOutput% is in the html file it will be replace by the ouput of the Arduino
@@ -52,4 +52,4 @@ class DemoCore():
         return html
 
 if __name__ == "__main__":
-    print "Please Run idex.py instead";
+    print "Please Run index.py instead";
