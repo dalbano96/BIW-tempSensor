@@ -1,4 +1,4 @@
-# demoCore.py - Gather Serial Data and replace it in the HTML file.
+# Access the data from the Arduino via Serial
 
 import os
 import serial
