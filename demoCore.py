@@ -2,6 +2,7 @@
 
 import os
 import serial
+import cgi
 CURRENTDIR = os.path.dirname(__file__)
 BASEDIR = os.path.dirname(CURRENTDIR)
 
@@ -15,9 +16,19 @@ class DemoCore():
     def index(self,request):
         ser = serial.Serial('/dev/ttyACM0', 9600) # This is the Serial Port we gather information from. You could replace this with the inbuild port if you wish
 
+#	form = cgi.FieldStorage() # Prep demoCore to receive input data
+#        toggle = form.getvalue("toggle") # Retrieve user toggle, important for toggling device
+#	toggle = "yes" 
+
+#	if toggle == "yes":
+#		ser.write("y")
+#	else:
+#		ser.write("n")
+
         data = self.receiving(ser)             
         
         html = self.showDemoHTML(data)
+
         return html
 
     def receiving(self, ser):
