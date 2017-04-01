@@ -3,6 +3,7 @@
 import os
 import serial
 import cgi
+import re
 CURRENTDIR = os.path.dirname(__file__)
 BASEDIR = os.path.dirname(CURRENTDIR)
 
@@ -33,8 +34,23 @@ class DemoCore():
 
     def receiving(self, ser):
 	global last_received
+#	data = ["",""]
 	buffer = ''
 	while True:
+#		buffer = buffer + ser.read()
+#		if '\r\n' in buffer:
+#			splitbuffer = buffer.split('\r\n')
+#			buffer = splitbuffer[1]
+#			while True:
+#				buffer = buffer + ser.read()
+#				if '\r\n' in buffer:
+#					data[0] = buffer
+#					matchTemperature = re.match(r'Temperature: (.*) \*C', buffer, re.M|re.I)
+#					if matchTemperature:
+#						data[1] = matchTemperature.group(2)
+#					return data
+			
+
 		buffer = buffer + ser.read()
 		if '\r\n' in buffer:
 			tempbuffer = buffer.split('\r\n')
@@ -58,9 +74,9 @@ class DemoCore():
         html = html.replace("%TodaysDate%",aDate) # If %TodaysDate% Is in the html file it will be replace by the current time
 	html = html.replace("%Temperature%",str(data))
 	# html = html.replace("%Temperature%",str(data[0]))
-	html = html.replace("%pH Level%",str(data[1]))
-	html = html.replace("%Dissolved Oxygen%",str(data[2]))
-	html = html.replace("%Electrical Conductivity%",str(data[3]))
+	# html = html.replace("%pH Level%",str(data[1]))
+	# html = html.replace("%Dissolved Oxygen%",str(data[2]))
+	# html = html.replace("%Electrical Conductivity%",str(data[3]))
 
         return html
 

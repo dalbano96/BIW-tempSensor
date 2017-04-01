@@ -30,7 +30,7 @@ def indexApp():
     
     try:
         ##
-        ## ...your code goese here...
+        ## ...your code goes here...
         ## I normally create a seperate 'core' application, in this case demoCore.py
         ##
         from demoCore import DemoCore
