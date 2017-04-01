@@ -29,12 +29,12 @@ def indexApp():
     
     try:
         ##
-        ## ...your code goes here...
+        ## ...your code goese here...
         ## I normally create a seperate 'core' application, in this case demoCore.py
         ##
-        from getData import getData
-        getData = getData()
-        htmlData = getData.index(request)
+        from demoCore import DemoCore
+        demoCore = DemoCore()
+        htmlData = demoCore.index(request)
 
         ## output your html code
         response = make_response(htmlData)
