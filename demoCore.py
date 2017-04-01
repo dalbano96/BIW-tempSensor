@@ -33,6 +33,7 @@ class DemoCore():
 
     def receiving(self, ser):
         global last_received
+	data = ["","","","",""]
         # global ser
 
         buffer = ''
@@ -43,10 +44,9 @@ class DemoCore():
                 buffer = tempbuffer[1]
                 while True:
                     buffer = buffer + ser.read()
-                    if '\r\n' in buffer:
-                        tempbuffer = buffer.split('\r\n')
-                        buffer = tempbuffer[0]                    
-                        return buffer
+			if '\r\n' in buffer:
+                        	data[0] = buffer 
+		return data
 
     def showDemoHTML(self,data):
         ## reads an html file and does things with it
@@ -58,7 +58,10 @@ class DemoCore():
         f = open(CURRENTDIR +"/demo.html")
         html = f.read()
         html = html.replace("%TodaysDate%",aDate) # If %TodaysDate% Is in the html file it will be replace by the current time
-        html = html.replace("%ArduinoOutput%",str(data)) #If %ArduinoOutput% is in the html file it will be replace by the ouput of the Arduino
+	html = html.replace("%Temperature%",str(data[0]))
+	html = html.replace("%pH Level%",str(data[1]))
+	html = html.replace("%Dissolved Oxygen%",str(data[2]))
+	html = html.replace("%Electrical Conductivity%",str(data[3]))
 
         return html
 

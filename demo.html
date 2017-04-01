@@ -22,16 +22,16 @@ body {
 
   <!-- filename: demo.html -->
 
-  <body>
+  <body onload="startTimer(10)">
   <p>
     <strong>Time and Date:</strong>
     <br>
     %TodaysDate%
   </p>
   <p>
-    <strong>Serial Output</strong>
+    <strong>Temperature</strong>
     <br>
-    %ArduinoOutput%
+    %Temperature%
   </p>
 	<form action="demoCore.py" method="get">
 		<p>
@@ -39,5 +39,32 @@ body {
 			<input type="submit" name="toggle" value="Off">
 		</p>
 	</form>
+	<p> Page refresh in <span id="countdown" style"font-weight: bold;">10</span> seconds.</p>
   </body>
 </html>
+
+
+<script type="text/javascript">
+	var timeInSecs;
+	var ticker;
+	
+	function startTimer(secs) {
+		timeInSecs = parseInt(secs)-1;
+		ticker = setInterval("tick()",1000);
+	}
+
+	function tick() {
+		var secs = timeInSecs;
+		if(secs>0) {
+			timeInSecs--;
+		}
+		else {
+			clearInterval(ticker);
+			window.location.reload();
+			startTimer(10);
+		}
+
+		document.getElementById("countdown").innerHTML = secs;
+	}
+	}
+</script>
