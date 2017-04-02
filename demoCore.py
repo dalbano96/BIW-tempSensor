@@ -16,7 +16,7 @@ class DemoCore():
 
     def index(self,request):
         ser = serial.Serial('/dev/ttyACM0', 9600) # This is the Serial Port we gather information from. You could replace this with the inbuild port if you wish
-	data = ["","",""]
+	data = ["","","",""]
 
 #	form = cgi.FieldStorage() # Prep demoCore to receive input data
 #        toggle = form.getvalue("toggle") # Retrieve user toggle, important for toggling device
@@ -35,7 +35,7 @@ class DemoCore():
 
     def receiving(self, ser):
 	global last_received
-	data = ["","",""]
+	data = ["","","",""]
 	buffer = ''
 	while True:
 		buffer = buffer + ser.read()
@@ -50,12 +50,13 @@ class DemoCore():
 				if '\r\n' in buffer:
 					# buffer in this scope stores the entire println string
 					data[0] = buffer
-					matchTemperature = re.match(r'(.*) Temperature: ([0-9]*)', buffer, re.M|re.I)
+					data[3] = data[0] 
+					matchTemperature = re.match(r'(.*)Temperature: ([0-9]*)', buffer, re.M|re.I)
 					if matchTemperature:
 						data[1] = matchTemperature.group(2)
-#					matchPH = re.match(r' pH Levels: ([0-9]*)', buffer, re.M|re.I)
-#					if matchPH:
-#						data[2] = matchPH.group(2)
+					matchPH = re.match(r'(.*)pH Levels: ([0-9]*)', buffer, re.M|re.I)
+					if matchPH:
+						data[2] = matchPH.group(2)
 					return data
 			
 
@@ -82,8 +83,8 @@ class DemoCore():
         html = html.replace("%TodaysDate%",aDate) # If %TodaysDate% Is in the html file it will be replace by the current time
 	html = html.replace("%Temperature%",str(data[1]))
 
-	# data[2] is used to test/debug data
-	# html = html.replace("%tempData%",str(data[2]))
+	# used to test/debug data
+	html = html.replace("%tempData%",str(data[3]))
 
 	html = html.replace("%pH%",str(data[2]))
 	# html = html.replace("%DissolvedOxygen%",str(data[2]))
