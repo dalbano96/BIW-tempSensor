@@ -24,8 +24,8 @@ unsigned long next_blink_time;
 boolean led_state = LOW;
 
 
-char *channel_names[] = {"DO", "TEMP", "PH", "EC"};
-String readings[NUM_CIRCUITS] = {"11","22","33","44"};
+char *channel_names[] = {"Dissolved Oxygen", " Temperature", " pH Levels", " Electrical Conductivity"};
+String readings[NUM_CIRCUITS] = {"1.1","2.2","3.3","4.4"};
 
 void setup() {
 	Serial.begin(baud_host);
@@ -37,6 +37,7 @@ void setup() {
 void loop() {
 	// do_sensor_readings();
 	do_serial();
+	delay(1000);
 	// blink_led();
 }
 
@@ -61,6 +62,7 @@ void do_serial() {
 			Serial.println("error opening file");
 		} */
 	}
+	Serial.println();
 	// dataFile.close();
 	// next_serial_time = millis() + send_readings_every;
 }
