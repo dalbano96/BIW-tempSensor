@@ -40,18 +40,22 @@ class DemoCore():
 	while True:
 		buffer = buffer + ser.read()
 		if '\r\n' in buffer:
+			# splitbuffer seems to store entire line in split notation
 			splitbuffer = buffer.split('\r\n')
+
+			# splitbuffer[1] stores nothing, carriage return?
 			buffer = splitbuffer[1]
 			while True:
 				buffer = buffer + ser.read()
 				if '\r\n' in buffer:
+					# buffer in this scope stores the entire println string
 					data[0] = buffer
-					matchTemperature = re.match(r'(.*)Temperature: (.*) \*C', buffer, re.M|re.I)
+					matchTemperature = re.match(r'(.*)Temperature: ([0-9]*)', buffer, re.M|re.I)
 					if matchTemperature:
 						data[1] = matchTemperature.group(2)
-#					matchPH = re.match(r'(.*)pH Levels: (.*) \*C', buffer, re.M|re.I)
-#					if matchPH:
-#						data[2] = matchPH.group(2)
+					matchPH = re.match(r'(.*) pH Levels:([0-9]*) .*', buffer, re.M|re.I)
+					if matchPH:
+						data[2] = matchPH.group(2)
 					return data
 			
 
@@ -77,6 +81,10 @@ class DemoCore():
         html = f.read()
         html = html.replace("%TodaysDate%",aDate) # If %TodaysDate% Is in the html file it will be replace by the current time
 	html = html.replace("%Temperature%",str(data[1]))
+
+	# data[2] is used to test/debug data
+	# html = html.replace("%tempData%",str(data[2]))
+
 	html = html.replace("%pH%",str(data[2]))
 	# html = html.replace("%DissolvedOxygen%",str(data[2]))
 	# html = html.replace("%ElectricalConductivity%",str(data[3]))
