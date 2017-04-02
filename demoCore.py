@@ -50,12 +50,12 @@ class DemoCore():
 				if '\r\n' in buffer:
 					# buffer in this scope stores the entire println string
 					data[0] = buffer
-					matchTemperature = re.match(r'(.*)Temperature: ([0-9]*)', buffer, re.M|re.I)
+					matchTemperature = re.match(r'(.*) Temperature: ([0-9]*)', buffer, re.M|re.I)
 					if matchTemperature:
 						data[1] = matchTemperature.group(2)
-					matchPH = re.match(r'(.*) pH Levels:([0-9]*) .*', buffer, re.M|re.I)
-					if matchPH:
-						data[2] = matchPH.group(2)
+#					matchPH = re.match(r' pH Levels: ([0-9]*)', buffer, re.M|re.I)
+#					if matchPH:
+#						data[2] = matchPH.group(2)
 					return data
 			
 
